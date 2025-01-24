@@ -16,14 +16,21 @@ namespace CylinderTestCode
         public void TestRadiusAndHeightLessThan0()
         {
             Assert.Throws<ArgumentException>(() => new Cylinder(-10, 20));
+            Assert.Throws<ArgumentException>(() => new Cylinder(10, -20));
+            Assert.Throws<ArgumentException>(() => new Cylinder(5, 0));
+            Assert.Throws<ArgumentException>(() => new Cylinder(0, 5));
         }
 
         [Fact]
         public void TestGetVolumeAndGetSurfaceArea() 
         {
             Cylinder cylinder = new(1, 1);
-            Assert.Equal(Math.PI, cylinder.GetVolume());
-            Assert.Equal(4*Math.PI, cylinder.GetSurfaceArea());
+            Assert.Equal(Math.PI * Math.Pow(1, 2) * 1, cylinder.GetVolume(), precision: 2);
+            Assert.Equal(2 * Math.PI * Math.Pow(1, 2) + 2 * Math.PI * 1 * 1, cylinder.GetSurfaceArea(), precision: 2);
+
+            cylinder = new(1/3.0, 1/5.0);
+            Assert.Equal(Math.PI * Math.Pow((1/3.0), 2) * (1/5.0), cylinder.GetVolume(), precision: 2);
+            Assert.Equal(2 * Math.PI * Math.Pow((1/3.0), 2) + 2 * Math.PI * (1/3.0) * (1/5.0), cylinder.GetSurfaceArea(), precision: 2);
         }
 
         [Fact]
